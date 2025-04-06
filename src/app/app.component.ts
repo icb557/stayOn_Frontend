@@ -9,14 +9,15 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent  {
+export class AppComponent {
   title = 'stayOn_Frontend';
   navbar: boolean = true;
+  hiddenRoutes = ['/login', '/register'];
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.navbar = event.url !== '/login';
+        this.navbar = !this.hiddenRoutes.includes(event.url);
       }
     });
   }
