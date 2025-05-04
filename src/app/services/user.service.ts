@@ -17,8 +17,8 @@ export class UserService {
   requestPasswordReset(email: string): Observable<any> {
     return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}/request-password-reset`, { email })
   }
-  resectPassword(data: any): Observable<any> {
-    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}/reset-password`, data)
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}/reset-password`, { token, newPassword })
   }
 
 }
