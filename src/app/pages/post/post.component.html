@@ -7,46 +7,49 @@
         <div class="main-content">
             <div class="user-post">
                 <div class="user-info">
-                    <div class="avatar">U</div>
+                    <div class="avatar">{{post.userId.substring(0,2).toUpperCase()}}</div>
                     <div class="user-details">
-                        <div class="username">Usuario Ejemplo</div>
-                        <div class="post-date">3 de mayo, 2025 • 10:30</div>
+                        <div class="username">{{post.userId}}</div>
+                        <div class="post-date">{{formatDate(post.date)}}</div>
                     </div>
                 </div>
                 
                 <div class="topic-tag">
-                    <span class="tag">Estadística</span>
+                    <span class="tag">{{post.Topic.name}}</span>
                 </div>
 
                 <div class="message-box">
-                    ¿Alguien puede ayudarme con el proyecto de estadística? Estoy teniendo problemas para entender cómo aplicar la regresión lineal a este conjunto de datos.
+                    {{post.message}}
                 </div>
                 
                 <div class="attachments-box">
-                    <div class="attachment-item">
-                        <div class="attachment-icon">
-                            <i class='bx bxs-file' ></i>
+                    @for (item of post.Materials; track $index) {
+                        <div class="attachment-item">
+                            <div class="attachment-icon">
+                                @switch (item.type) {
+                                    @case ('document') {
+                                        <i class='bx bxs-file' ></i>
+                                    }
+                                    @case ('image') {
+                                        <i class='bx bxs-image' ></i>
+                                    }
+                                    @case ('video') {
+                                        <i class='bx bxs-video' ></i>
+                                    }
+                                    @case ('url') {
+                                        <i class='bx bx-link' ></i>
+                                    }
+                                    @default {
+                                        <i class='bx bx-question-mark'></i>
+                                    }           
+                                }
+                            </div>
+                            <div class="attachment-label">{{item.name}}</div>
                         </div>
-                        <div class="attachment-label">Documento</div>
-                    </div>
-                    <div class="attachment-item">
-                        <div class="attachment-icon">
-                            <i class='bx bxs-image' ></i>
-                        </div>
-                        <div class="attachment-label">Imagen</div>
-                    </div>
-                    <div class="attachment-item">
-                        <div class="attachment-icon">
-                            <i class='bx bxs-video' ></i>
-                        </div>
-                        <div class="attachment-label">Video</div>
-                    </div>
-                    <div class="attachment-item">
-                        <div class="attachment-icon">
-                            <i class='bx bx-link' ></i>
-                        </div>
-                        <div class="attachment-label">Enlace</div>
-                    </div>
+                        
+                    } @empty {
+                        No hay archivos adjuntos.
+                    }
                 </div>
             </div>
         </div>
@@ -55,45 +58,25 @@
             <div class="comments-header">
                 Comentarios
             </div>
-            
-            <div class="comment">
-                <div class="comment-header">
-                    <div class="comment-avatar">U1</div>
-                    <div class="comment-info">
-                        <div class="comment-user">Usuario1</div>
-                        <div class="comment-date">3 Mayo, 2025 • 11:05</div>
+
+            @for (item of post.Comments; track $index) {
+                <div class="comment">
+                    <div class="comment-header">
+                        <div class="comment-avatar">{{item.userId.substring(0,2).toUpperCase()}}</div>
+                        <div class="comment-info">
+                            <div class="comment-user">{{item.userId}}</div>
+                            <div class="comment-date">{{formatDate(item.date)}}</div>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        {{item.message}}
                     </div>
                 </div>
-                <div class="comment-content">
-                    Yo tuve el mismo problema. Te recomiendo revisar los apuntes de la clase del lunes pasado, ahí explica muy bien el proceso.
-                </div>
-            </div>
-            
-            <div class="comment">
-                <div class="comment-header">
-                    <div class="comment-avatar">U2</div>
-                    <div class="comment-info">
-                        <div class="comment-user">Usuario2</div>
-                        <div class="comment-date">3 Mayo, 2025 • 11:23</div>
-                    </div>
-                </div>
-                <div class="comment-content">
-                    Hay un video en la sección de recursos que explica la regresión lineal paso a paso. ¡Me ayudó mucho!
-                </div>
-            </div>
-            
-            <div class="comment">
-                <div class="comment-header">
-                    <div class="comment-avatar">U3</div>
-                    <div class="comment-info">
-                        <div class="comment-user">Usuario3</div>
-                        <div class="comment-date">3 Mayo, 2025 • 12:46</div>
-                    </div>
-                </div>
-                <div class="comment-content">
-                    Puedo ayudarte mañana en la sala de estudio si quieres. Envíame un mensaje directo para coordinar la hora.
-                </div>
-            </div>
+                
+            }
+            @empty {
+                <div class="no-comments">No hay comentarios aún.</div>
+            }
         </div>
     </div>
 </div>

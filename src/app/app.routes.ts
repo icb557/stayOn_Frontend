@@ -17,14 +17,12 @@ export const routes: Routes = [{
     title: 'register',
     path: 'register',
     component: RegisterComponent
-}
-// , {
-//     path: '**',
-//     redirectTo: '',
-//     pathMatch: 'full'
-// }
-, {
+}, {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
+}, {
     title: 'post',
-    path: 'post',
+    path: 'post/:id',
     component: PostComponent
 }];
