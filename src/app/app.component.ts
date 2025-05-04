@@ -12,12 +12,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 export class AppComponent {
   title = 'stayOn_Frontend';
   navbar: boolean = true;
-  hiddenRoutes = ['/login', '/register'];
+  hiddenRoutes = ['/login', '/register', '/forgot-password', '/reset-password'];
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.navbar = !this.hiddenRoutes.includes(event.url);
+        this.navbar = !this.hiddenRoutes.some(route => event.url.startsWith(route));
       }
     });
   }
