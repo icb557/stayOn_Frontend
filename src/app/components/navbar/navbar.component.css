@@ -20,16 +20,6 @@
     margin-right: 10px;
   }
   
-  .logo-text {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--dark-blue);
-  }
-  
-  .logo-text span {
-    color: var(--orange);
-  }
-  
   /* Navigation links */
   .nav-links {
     display: flex;
