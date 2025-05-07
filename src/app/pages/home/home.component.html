@@ -1,12 +1,9 @@
 <div class="home-container">
-    <section class="hero">
-        <div class="hero-text">
-            <h1>Conectando estudiantes, impulsando el aprendizaje</h1>
-            <p>Una plataforma de apoyo académico para combatir la deserción universitaria.</p>
-            <button>Explorar Servicios</button>
-        </div>
-    </section>
-    <!-- Panel para crear publicación -->
+    <div class="carousel-wrapper">
+          <img src="https://estudios.unad.edu.co/images/2024/SUA.jpg" class="carousel-slide active" alt="Slide 1">
+          <img src="https://estudios.unad.edu.co/images/2025/estrategias-digitales-de-comunicacion.jpg" class="carousel-slide" alt="Slide 2">
+          <img src="https://estudios.unad.edu.co/images/2024/Espanol-como-Segunda-Lengua.jpg" class="carousel-slide" alt="Slide 3">
+      </div>
      <div class="post-creator-wrapper">
 <div class="post-creator">
     <div class="post-header">
@@ -59,10 +56,10 @@
                     <div class="post-content">
                         {{item.message}}
                     </div>
-                    <div class="attachments-box">
+                    <div class="post-attachments">
                         @for (item of item.Materials; track $index) {
-                            <div class="attachment-item">
-                                <div class="attachment-icon">
+                            <div class="attachments-box">
+                                <div class="attachment">
                                     @switch (item.type) {
                                         @case ('document') {
                                             <i class='bx bxs-file' ></i>
@@ -90,7 +87,7 @@
                     </div>
                     <div class="post-footer">
                         <hr class="post-separator">
-                        <button class="comment-btn" (click)="showPost(item.id)" class='bx bx-show'>Ver publicación</button>
+                        <button class="comment-btn" (click)="showPost(item.id)" >Ver publicación</button>
                     </div>
                 </div>
             }

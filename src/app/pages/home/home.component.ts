@@ -13,17 +13,38 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
   posts: Post[] = []
-
+  currentSlideIndex = 0;
+  slides!: NodeListOf<Element>;
   constructor(private _postService: PostService , private router: Router) {}
 
   ngOnInit(): void {
     this.getPost()
+    this.slides = document.querySelectorAll('.carousel-slide');
+  this.showSlide(this.currentSlideIndex);
+  this.startCarousel();
   }
 
+  
+  startCarousel() {
+    setInterval(() => {
+      this.nextSlide();
+    }, 5000); // Cambia cada 5 segundos
+  }
+  
+  showSlide(index: number) {
+    this.slides.forEach(slide => slide.classList.remove('active'));
+    this.slides[index].classList.add('active');
+  }
+  
+  nextSlide() {
+    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slides.length;
+    this.showSlide(this.currentSlideIndex);
+  }
 
   showPost(id: number){
     this.router.navigate([`/post/${id}`])
   }
+
   getPost(){
     this._postService.getPosts().subscribe({
       next: (data) => {
