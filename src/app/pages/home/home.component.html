@@ -6,8 +6,28 @@
             <button>Explorar Servicios</button>
         </div>
     </section>
+    <!-- Panel para crear publicación -->
+     <div class="post-creator-wrapper">
+<div class="post-creator">
+    <div class="post-header">
+        Crear publicación
+    </div>
+    <div class="post-body">
+        <textarea class="post-message" placeholder="¿Qué estás pensando?"></textarea>
 
-    <section class="features">
+        <input type="text" class="post-topic" placeholder="Tema (ej. Tecnología, Psicología...)">
+
+        <div class="attachment-area">
+            <label for="file-upload" class="attachment-label">📎 Adjuntar archivo</label>
+            <input type="file" id="file-upload" class="file-input" multiple>
+        </div>
+
+        <button class="comment-btn publish-btn">Publicar</button>
+    </div>
+</div>
+</div>
+
+    <!-- <section class="features">
         <div class="feature-card">
             <h3>Monitorías Académicas</h3>
             <p>Recibe o brinda ayuda personalizada en las materias que más lo necesites.</p>
@@ -20,5 +40,117 @@
             <h3>Monitores Seguidos</h3>
             <p>Accede a recursos de los monitores que sigues.</p>
         </div>
-    </section>
+    </section> -->
+    <div class="container">
+        <div class="main-content">
+
+            <!-- Posts del usuario -->
+            <div class="posts-container">
+                @for (item of posts; track item.id; let i=$index) {
+                <div class="post-card">
+                    <div class="post-author">
+                        <div class="post-avatar">{{item.userId.substring(0,2).toUpperCase()}}</div>
+                        <div class="post-author-info">
+                            <div class="post-author-name">{{item.userId}}</div>
+                            <div class="post-date">{{formatDate(item.date)}}</div>
+                            <div class="post-tag">{{item.Topic.name}}</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        {{item.message}}
+                    </div>
+                    <div class="attachments-box">
+                        @for (item of item.Materials; track $index) {
+                            <div class="attachment-item">
+                                <div class="attachment-icon">
+                                    @switch (item.type) {
+                                        @case ('document') {
+                                            <i class='bx bxs-file' ></i>
+                                        }
+                                        @case ('image') {
+                                            <i class='bx bxs-image' ></i>
+                                        }
+                                        @case ('video') {
+                                            <i class='bx bxs-video' ></i>
+                                        }
+                                        @case ('url') {
+                                            <i class='bx bx-link' ></i>
+                                        }
+                                        @default {
+                                            <i class='bx bx-question-mark'></i>
+                                        }           
+                                    }
+                                </div>
+                                <div class="attachment-label">{{item.name}}</div>
+                            </div>
+                            
+                        } @empty {
+                            No hay archivos adjuntos.
+                        }
+                    </div>
+                    <div class="post-footer">
+                        <hr class="post-separator">
+                        <button class="comment-btn" (click)="showPost(item.id)" class='bx bx-show'>Ver publicación</button>
+                    </div>
+                </div>
+            }
+
+            </div>
+        </div>
+    
+        <!-- Panel lateral derecho completo -->
+<div class="following-container">
+    
+    <!-- Barra de búsqueda -->
+    <div class="search-bar">
+        <input type="text" placeholder="Buscar personas o temas...">
+        <button class="search-btn">Buscar</button>
+    </div>
+
+    <!-- Temas sugeridos -->
+    <div class="suggested-topics">
+        <div class="topics-header">Temas sugeridos</div>
+        <div class="topics-list">
+            <span class="topic-tag">Matemáticas</span>
+            <span class="topic-tag">Literatura</span>
+            <span class="topic-tag">Física</span>
+            <span class="topic-tag">Desarrollo Web</span>
+            <span class="topic-tag">Inteligencia Artificial</span>
+            <span class="topic-tag">Estadistica</span>
+            <span class="topic-tag">Redes</span>
+        </div>
+    </div>
+
+    <!-- Siguiendo -->
+    <div class="following-header">Siguiendo</div>
+    <div class="following-list">
+        <div class="following-item">
+            <div class="following-avatar">LC</div>
+            <div class="following-info">
+                <div class="following-name">Laura Castillo</div>
+                <div class="following-program">Ing. Industrial</div>
+            </div>
+            <button class="btn-follow btn-following">Siguiendo</button>
+        </div>
+
+        <div class="following-item">
+            <div class="following-avatar">MV</div>
+            <div class="following-info">
+                <div class="following-name">Miguel Vargas</div>
+                <div class="following-program">Ing. Sistemas</div>
+            </div>
+            <button class="btn-follow btn-following">Siguiendo</button>
+        </div>
+
+        <div class="following-item">
+            <div class="following-avatar">AP</div>
+            <div class="following-info">
+                <div class="following-name">Ana Patricia Soto</div>
+                <div class="following-program">Medicina</div>
+            </div>
+            <button class="btn-follow btn-following">Siguiendo</button>
+        </div>
+    </div>
+</div>
+    </div>
 </div>
