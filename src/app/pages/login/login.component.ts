@@ -27,13 +27,8 @@ export class LoginComponent {
           localStorage.setItem('email', data.email);
           localStorage.setItem('firstName', data.firstName);
 
-          if (data.role === 'student') {
-            this.router.navigate(['/']);
-          } else if (data.role === 'monitor') {
-            this.router.navigate(['/']);
-          } else {
-            alert('Invalid role');
-          }
+          this.router.navigate(['/']);
+         
         },
         error: (e: HttpErrorResponse) => {
           alert('Invalid credentials');

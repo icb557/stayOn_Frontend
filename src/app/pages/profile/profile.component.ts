@@ -16,7 +16,6 @@ export class ProfileComponent {
   userId: string= ''
 
   constructor(private aRouter: ActivatedRoute, private _profileService: Profileservice, private router: Router) {
-    this.userId = this.aRouter.snapshot.paramMap.get('userId')!
   }
 
   ngOnInit(): void {
@@ -32,14 +31,12 @@ export class ProfileComponent {
 
   showProfile(id: string) {
     this.router.navigate([`/profile/${id}`])
-    console.log(`/profile/${id}`)
   }
   
   getProfile(){
     this._profileService.getProfile(this.userId).subscribe({
       next: (data) => {
         this.profile = data
-        console.log(data)
       }, error: (e: HttpErrorResponse) => {
         Swal.fire({
           icon: "error",
@@ -66,5 +63,9 @@ export class ProfileComponent {
     const time = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false });
 
     return `${day} de ${month}, ${year} • ${time}`;
+  }
+
+  myProfile() {
+    return this.userId === localStorage.getItem('email')
   }
 }

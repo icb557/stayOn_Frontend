@@ -52,7 +52,7 @@
         <button type="submit" (click)="saveUser()">Ingresar</button>
 
         <p class="register-link">
-          ¿Ya tienes una cuenta? <a routerLink="/login">Iniciar Sesión</a>
+          ¿Ya tienes una cuenta? <a [routerLink]="['/login']">Iniciar Sesión</a>
         </p>
       </form>
 

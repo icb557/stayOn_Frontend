@@ -9,18 +9,25 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   userName: string = '';
+  userId: string = '';
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     const name = localStorage.getItem('firstName');
+    const userId = localStorage.getItem('email');
     if (name) {
       this.userName = name;
+      this.userId = userId!;
     }
   }
 
   logout(): void {
     localStorage.clear();
     this.router.navigate(['/login']);
+  }
+
+  goToProfile(userId: string): void {
+    this.router.navigate([`/profile/${userId}`]);
   }
 }

@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -51,6 +51,7 @@ export class RegisterComponent {
           timer: 1500,
         });
         this.userForm.reset();
+        this.router.navigate(['/login']);
       });
     }
   }

@@ -5,6 +5,11 @@
         <div class="profile-card">
             <div class="profile-header">
                 <div class="profile-avatar">{{profile.firstName.substring(0,1) + profile.lastName.substring(0,1)}}</div>
+                @if (myProfile()) {
+                    <button class="edit-button">
+                        <i class='bx bxs-pencil'></i>
+                    </button>
+                }
             </div>
             <div class="profile-info">
                 <h2 class="profile-name">{{profile.firstName + ' ' + (profile.middleName ? profile.middleName : '') + ' ' + profile.lastName + ' ' + (profile.secondLastName ? profile.secondLastName : '')}}</h2>

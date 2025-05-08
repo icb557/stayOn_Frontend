@@ -27,7 +27,6 @@ export class HomeComponent {
 
   showProfile(id: string) {
     this.router.navigate([`/profile/${id}`])
-    console.log(`/profile/${id}`)
   }
   
   startCarousel() {
