@@ -1,0 +1,51 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="body">
+      <form class="search-form">
+        <input
+          type="text"
+          class="post-topic"
+          placeholder="Buscar personas o temas..."
+          [(ngModel)]="query"
+          name="user"
+        />
+        <button class="comment-btn publish-btn" (click)="searchUser()">
+          Buscar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper">
+  <div class="container">
+    <div class="body">
+      <!-- lista de usuarios encontrados -->
+      <h3 class="title">Usuarios Encontrados</h3>
+      <div class="search-results">
+        @for (item of filteredUsers; track item.email; let i=$index) {
+        <div class="user-details" (click)="viewUser(item.email)">
+          <p class="post-avatar">
+            {{ item.email.substring(0, 2).toUpperCase() }}
+          </p>
+          <div class="post-author-info">
+            <div class="post-author-name">
+              {{
+                item.firstName +
+                  " " +
+                  (item.middleName ?? "") +
+                  " " +
+                  item.lastName +
+                  " " +
+                  (item.secondLastName ?? "")
+              }}
+            </div>
+            <div class="post-date">{{ item.age }} años</div>
+            <div class="post-tag">{{ item.major }}</div>
+          </div>
+        </div>
+        } @empty { No se encontraron usuarios. }
+      </div>
+    </div>
+  </div>
+</div>

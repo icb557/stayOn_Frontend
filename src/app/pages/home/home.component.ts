@@ -4,27 +4,28 @@ import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Post } from '../../interfaces/post';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
   posts: Post[] = []
 
-  constructor(private _postService: PostService , private router: Router) {}
+  constructor(private _postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
     this.getPost()
   }
 
 
-  showPost(id: number){
+  showPost(id: number) {
     this.router.navigate([`/post/${id}`])
   }
-  getPost(){
+  getPost() {
     this._postService.getPosts().subscribe({
       next: (data) => {
         this.posts = data
@@ -56,5 +57,10 @@ export class HomeComponent {
 
     return `${day} de ${month}, ${year} • ${time}`;
   }
-
+  user = ""
+  searchUser() {
+    if (this.user !== "") {
+      window.location.href = `/search?query=${this.user}`
+    }
+  }
 }
