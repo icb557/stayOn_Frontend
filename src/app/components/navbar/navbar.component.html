@@ -21,16 +21,16 @@
       </a>
     </div>
 
-    <!-- Right Section: Search and User -->
+    <!-- Right Section: Search, User Icon, Name, and Logout -->
     <div class="nav-right">
-      <!-- <a href="#" aria-label="Search">
-        <i class='bx bx-search-alt-2' ></i>
-      </a> -->
+      <a href="#" aria-label="Search">
+        <i class='bx bx-search-alt-2'></i>
+      </a>
       <a href="#" aria-label="User account">
         <i class="bx bxs-user-circle"></i>
       </a>
+      <p id="userName">{{ userName }}</p>
+      <button class="logout-button" (click)="logout()">Cerrar sesión</button>
     </div>
-
-    <p id="userName">Usuario</p>
   </nav>
 </main>
