@@ -5,6 +5,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { PostComponent } from './pages/post/post.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 export const routes: Routes = [{
     title: 'Home',
@@ -33,7 +34,13 @@ export const routes: Routes = [{
     path: 'post/:id',
     component: PostComponent
 }, {
-    path: '**',
-    redirectTo: '',
-    pathMatch: 'full'
-}];
+    title: 'profile',
+    path: 'profile/:userId',
+    component: ProfileComponent
+}
+// , {
+//     path: '**',
+//     redirectTo: '',
+//     pathMatch: 'full'
+// }
+];
