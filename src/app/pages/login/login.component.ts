@@ -24,6 +24,8 @@ export class LoginComponent {
         next: (data) => {
           localStorage.setItem('token', data.token);
           localStorage.setItem('role', data.role);
+          localStorage.setItem('email', data.email);
+          localStorage.setItem('firstName', data.firstName);
 
           if (data.role === 'student') {
             this.router.navigate(['/']);
