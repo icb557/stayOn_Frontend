@@ -18,6 +18,6 @@ export class Profileservice {
   }
 
   getProfile(userId: string): Observable<Profile> {
-    return this.http.get<Profile>(`${this.myAppUrl}${this.myApiUrl}`)
+    return this.http.get<Profile>(`${this.myAppUrl}${this.myApiUrl}/${userId}`)
   }
 }

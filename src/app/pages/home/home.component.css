@@ -274,6 +274,10 @@
     margin-bottom: 12px;
 }
 
+.post-author {
+    cursor: pointer;
+}
+
 .post-avatar {
     width: 42px;
     height: 42px;

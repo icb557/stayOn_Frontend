@@ -56,9 +56,4 @@ export class PostComponent implements OnInit {
 
     return `${day} de ${month}, ${year} • ${time}`;
   }
-
-  print(str: Comment){
-    console.log(str)
-  }
-
 }
