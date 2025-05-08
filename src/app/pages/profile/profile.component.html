@@ -4,29 +4,29 @@
         <!-- Perfil del usuario -->
         <div class="profile-card">
             <div class="profile-header">
-                <div class="profile-avatar">JR</div>
+                <div class="profile-avatar">{{profile.firstName.substring(0,1) + profile.lastName.substring(0,1)}}</div>
             </div>
             <div class="profile-info">
-                <h2 class="profile-name">Juan Rodríguez</h2>
+                <h2 class="profile-name">{{profile.firstName + ' ' + (profile.middleName ? profile.middleName : '') + ' ' + profile.lastName + ' ' + (profile.secondLastName ? profile.secondLastName : '')}}</h2>
                 <div class="profile-detail">
                     <i class='bx bx-envelope'></i>
-                    <p>email</p>
+                    <p>{{profile.email}}</p>
                 </div>
                 <div class="profile-detail">
                     <i class='bx bxs-graduation'></i>
-                    Ingeniería de Sistemas
+                    {{profile.major}}
                 </div>
                 <div class="profile-stats">
                     <div class="stat-item">
-                        <div class="stat-value">15</div>
+                        <div class="stat-value">{{profile.Posts.length}}</div>
                         <div class="stat-label">Publicaciones</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value">248</div>
+                        <div class="stat-value">{{profile.Followers.length}}</div>
                         <div class="stat-label">Seguidores</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value">135</div>
+                        <div class="stat-value">{{profile.Following.length}}</div>
                         <div class="stat-label">Siguiendo</div>
                     </div>
                 </div>
@@ -35,89 +35,54 @@
 
         <!-- Posts del usuario -->
         <div class="posts-container">
+            @for (item of profile.Posts; track $index;let i=$index) {
             <div class="post-card">
                 <div class="post-author">
-                    <div class="post-avatar">JR</div>
+                    <div class="post-avatar">{{profile.firstName.substring(0,1) + profile.lastName.substring(0,1)}}</div>
                     <div class="post-author-info">
-                        <div class="post-author-name">Juan Rodríguez</div>
-                        <div class="post-date">3 de mayo, 2025 • 06:00</div>
-                        <div class="post-tag">Literatura</div>
+                        <div class="post-author-name">{{profile.email}}</div>
+                        <div class="post-date">{{formatDate(item.date)}}</div>
+                        <div class="post-tag">{{item.Topic.name}}</div>
                     </div>
                 </div>
                 <div class="post-content">
-                    I am gay! ❤️ 🏳️‍🌈 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ex lectus, sodales et maximus sit amet, vehicula ut sapien. Fusce eu pulvinar nisl. Nunc vitae iaculis sapien. Nunc dapibus metus nunc, id sagittis metus elementum et. Etiam viverra malesuada leo eget hendrerit. Nulla commodo venenatis scelerisque. Vivamus in vulputate odio.
+                    {{item.message}}
                 </div>
-                <div class="post-attachments">
-                    <div class="attachment">
-                        <div class="attachment-icon">
-                            <i class='bx bxs-video' ></i>
+                <div class="attachments-box">
+                    @for (item of item.Materials; track $index) {
+                        <div class="attachment-item">
+                            <div class="attachment-icon">
+                                @switch (item.type) {
+                                    @case ('document') {
+                                        <i class='bx bxs-file' ></i>
+                                    }
+                                    @case ('image') {
+                                        <i class='bx bxs-image' ></i>
+                                    }
+                                    @case ('video') {
+                                        <i class='bx bxs-video' ></i>
+                                    }
+                                    @case ('url') {
+                                        <i class='bx bx-link' ></i>
+                                    }
+                                    @default {
+                                        <i class='bx bx-question-mark'></i>
+                                    }           
+                                }
+                            </div>
+                            <div class="attachment-label">{{item.name}}</div>
                         </div>
-                        vid1
-                    </div>
-                    <div class="attachment">
-                        <div class="attachment-icon">
-                            <i class='bx bx-link' ></i>
-                        </div>
-                        url2
-                    </div>
-                    <div class="attachment">
-                        <div class="attachment-icon">
-                            <i class='bx bxs-image' ></i>
-                        </div>
-                        img2
-                    </div>
-                    <div class="attachment">
-                        <div class="attachment-icon">
-                            <i class='bx bxs-file' ></i>
-                        </div>
-                        doc3
-                    </div>
+                        
+                    } @empty {
+                        No hay archivos adjuntos.
+                    }
                 </div>
                 <div class="post-footer">
                     <hr class="post-separator">
-                    <button class="comment-btn">Comentar</button>
+                    <button class="comment-btn" (click)="showPost(item.id)">Comentar</button>
                 </div>
-            </div>
-
-            <div class="post-card">
-                <div class="post-author">
-                    <div class="post-avatar">JR</div>
-                    <div class="post-author-info">
-                        <div class="post-author-name">Juan Rodríguez</div>
-                        <div class="post-date">1 de mayo, 2025 • 14:30</div>
-                        <div class="post-tag">Estadística</div>
-                    </div>
                 </div>
-                <div class="post-content">
-                    ¿Alguien puede ayudarme con el proyecto de estadística? Estoy teniendo problemas para entender cómo aplicar la regresión lineal a este conjunto de datos. He revisado los apuntes de clase pero sigo sin comprender el proceso completo.
-                </div>
-                <div class="post-attachments">
-                    <div class="attachment">
-                        <div class="attachment-icon">
-                            <i class='bx bxs-file' ></i>
-                        </div>
-                        datos.xlsx
-                    </div>
-                </div>
-                 <div class="post-footer">
-                    <hr class="post-separator">
-                    <button class="comment-btn">Comentar</button>
-                </div>
-            </div>
-
-            <div class="post-card">
-                <div class="post-author">
-                    <div class="post-avatar">JR</div>
-                    <div class="post-author-info">
-                        <div class="post-author-name">Juan Rodríguez</div>
-                        <div class="post-date">28 de abril, 2025 • 09:15</div>
-                        <div class="post-tag">Matemáticas</div>
-                    </div>
-                </div>
-                <div class="post-content">
-                    Acabo de terminar el curso de cálculo avanzado con el profesor Martínez. Si alguien necesita ayuda o tiene preguntas sobre los temas que vimos, puedo ayudar. Especialmente con series de Taylor y ecuaciones diferenciales.
-                </div>
-            </div>
+        }
         </div>
     </div>
 
@@ -127,50 +92,17 @@
             Siguiendo
         </div>
         <div class="following-list">
+            @for (item of profile.Following; track $index;let i=$index) {
             <div class="following-item">
-                <div class="following-avatar">LC</div>
+                <div class="following-avatar">jr</div>
                 <div class="following-info">
-                    <div class="following-name">Laura Castillo</div>
-                    <div class="following-program">Ing. Industrial</div>
+                    <div class="following-name" (click)="showProfile(item.email)" >{{item.firstName + ' ' + (item.middleName ? item.middleName : '') + ' ' + item.lastName + ' ' + (item.secondLastName ? item.secondLastName : '')}}</div>
+                    <div class="following-program">{{item.major}}</div>
                 </div>
                 <button class="btn-follow btn-following">Siguiendo</button>
             </div>
-
-            <div class="following-item">
-                <div class="following-avatar">MV</div>
-                <div class="following-info">
-                    <div class="following-name">Miguel Vargas</div>
-                    <div class="following-program">Ing. Sistemas</div>
-                </div>
-                <button class="btn-follow btn-following">Siguiendo</button>
-            </div>
-
-            <div class="following-item">
-                <div class="following-avatar">AP</div>
-                <div class="following-info">
-                    <div class="following-name">Ana Patricia Soto</div>
-                    <div class="following-program">Medicina</div>
-                </div>
-                <button class="btn-follow btn-following">Siguiendo</button>
-            </div>
-
-            <div class="following-item">
-                <div class="following-avatar">CR</div>
-                <div class="following-info">
-                    <div class="following-name">Carlos Ramírez</div>
-                    <div class="following-program">Economía</div>
-                </div>
-                <button class="btn-follow btn-following">Siguiendo</button>
-            </div>
-
-            <div class="following-item">
-                <div class="following-avatar">JG</div>
-                <div class="following-info">
-                    <div class="following-name">Julia González</div>
-                    <div class="following-program">Arquitectura</div>
-                </div>
-                <button class="btn-follow btn-following">Siguiendo</button>
+        }
+            
             </div>
         </div>
     </div>
-</div>

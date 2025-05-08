@@ -25,11 +25,15 @@ export class HomeComponent {
   this.startCarousel();
   }
 
+  showProfile(id: string) {
+    this.router.navigate([`/profile/${id}`])
+    console.log(`/profile/${id}`)
+  }
   
   startCarousel() {
     setInterval(() => {
       this.nextSlide();
-    }, 5000); // Cambia cada 5 segundos
+    }, 8000); 
   }
   
   showSlide(index: number) {
