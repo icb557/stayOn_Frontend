@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class UserService {
   }
   resetPassword(token: string, newPassword: string): Observable<any> {
     return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}/reset-password`, { token, newPassword })
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.myAppUrl}${this.myApiUrl}/`)
   }
 
 }
