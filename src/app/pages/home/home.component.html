@@ -9,35 +9,34 @@
     <div class="post-header">
         Crear publicación
     </div>
-    <div class="post-body">
-        <textarea class="post-message" placeholder="¿Qué estás pensando?"></textarea>
+  <!-- Panel para crear publicación -->
+  <div class="post-creator-wrapper">
+    <div class="post-creator">
+      <div class="post-header">Crear publicación</div>
+      <div class="post-body">
+        <textarea
+          class="post-message"
+          placeholder="¿Qué estás pensando?"
+        ></textarea>
 
-        <input type="text" class="post-topic" placeholder="Tema (ej. Tecnología, Psicología...)">
+        <input
+          type="text"
+          class="post-topic"
+          placeholder="Tema (ej. Tecnología, Psicología...)"
+        />
 
         <div class="attachment-area">
-            <label for="file-upload" class="attachment-label">📎 Adjuntar archivo</label>
-            <input type="file" id="file-upload" class="file-input" multiple>
+          <label for="file-upload" class="attachment-label"
+            >📎 Adjuntar archivo</label
+          >
+          <input type="file" id="file-upload" class="file-input" multiple />
         </div>
 
         <button class="comment-btn publish-btn">Publicar</button>
+      </div>
     </div>
-</div>
-</div>
+  </div>
 
-    <!-- <section class="features">
-        <div class="feature-card">
-            <h3>Monitorías Académicas</h3>
-            <p>Recibe o brinda ayuda personalizada en las materias que más lo necesites.</p>
-        </div>
-        <div class="feature-card">
-            <h3>Foro Estudiantil</h3>
-            <p>Comparte dudas, tips y experiencias con otros estudiantes como tú.</p>
-        </div>
-        <div class="feature-card">
-            <h3>Monitores Seguidos</h3>
-            <p>Accede a recursos de los monitores que sigues.</p>
-        </div>
-    </section> -->
     <div class="container">
         <div class="main-content">
 
@@ -92,62 +91,68 @@
                 </div>
             }
 
-            </div>
-        </div>
-    
-        <!-- Panel lateral derecho completo -->
-<div class="following-container">
-    
-    <!-- Barra de búsqueda -->
-    <div class="search-bar">
-        <input type="text" placeholder="Buscar personas o temas...">
-        <button class="search-btn">Buscar</button>
+      </div>
     </div>
 
-    <!-- Temas sugeridos -->
-    <div class="suggested-topics">
+    <!-- Panel lateral derecho completo -->
+    <div class="following-container">
+      <!-- Barra de búsqueda -->
+      <form>
+        <div class="search-bar">
+          <input
+            type="text"
+            [(ngModel)]="user"
+            name="user"
+            placeholder="Buscar personas o temas..."
+          />
+          <button class="search-btn" (click)="searchUser()">Buscar</button>
+        </div>
+      </form>
+
+      <!-- Temas sugeridos -->
+      <div class="suggested-topics">
         <div class="topics-header">Temas sugeridos</div>
         <div class="topics-list">
-            <span class="topic-tag">Matemáticas</span>
-            <span class="topic-tag">Literatura</span>
-            <span class="topic-tag">Física</span>
-            <span class="topic-tag">Desarrollo Web</span>
-            <span class="topic-tag">Inteligencia Artificial</span>
-            <span class="topic-tag">Estadistica</span>
-            <span class="topic-tag">Redes</span>
+          <span class="topic-tag">Matemáticas</span>
+          <span class="topic-tag">Literatura</span>
+          <span class="topic-tag">Física</span>
+          <span class="topic-tag">Desarrollo Web</span>
+          <span class="topic-tag">Inteligencia Artificial</span>
+          <span class="topic-tag">Estadistica</span>
+          <span class="topic-tag">Redes</span>
         </div>
-    </div>
+      </div>
 
-    <!-- Siguiendo -->
-    <div class="following-header">Siguiendo</div>
-    <div class="following-list">
+      <!-- Siguiendo -->
+      <div class="following-header">Siguiendo</div>
+      <div class="following-list">
         <div class="following-item">
-            <div class="following-avatar">LC</div>
-            <div class="following-info">
-                <div class="following-name">Laura Castillo</div>
-                <div class="following-program">Ing. Industrial</div>
-            </div>
-            <button class="btn-follow btn-following">Siguiendo</button>
-        </div>
-
-        <div class="following-item">
-            <div class="following-avatar">MV</div>
-            <div class="following-info">
-                <div class="following-name">Miguel Vargas</div>
-                <div class="following-program">Ing. Sistemas</div>
-            </div>
-            <button class="btn-follow btn-following">Siguiendo</button>
+          <div class="following-avatar">LC</div>
+          <div class="following-info">
+            <div class="following-name">Laura Castillo</div>
+            <div class="following-program">Ing. Industrial</div>
+          </div>
+          <button class="btn-follow btn-following">Siguiendo</button>
         </div>
 
         <div class="following-item">
-            <div class="following-avatar">AP</div>
-            <div class="following-info">
-                <div class="following-name">Ana Patricia Soto</div>
-                <div class="following-program">Medicina</div>
-            </div>
-            <button class="btn-follow btn-following">Siguiendo</button>
+          <div class="following-avatar">MV</div>
+          <div class="following-info">
+            <div class="following-name">Miguel Vargas</div>
+            <div class="following-program">Ing. Sistemas</div>
+          </div>
+          <button class="btn-follow btn-following">Siguiendo</button>
         </div>
+
+        <div class="following-item">
+          <div class="following-avatar">AP</div>
+          <div class="following-info">
+            <div class="following-name">Ana Patricia Soto</div>
+            <div class="following-program">Medicina</div>
+          </div>
+          <button class="btn-follow btn-following">Siguiendo</button>
+        </div>
+      </div>
     </div>
-</div>
-    </div>
+  </div>
 </div>

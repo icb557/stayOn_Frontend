@@ -4,10 +4,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Post } from '../../interfaces/post';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -41,7 +42,7 @@ export class HomeComponent {
     this.showSlide(this.currentSlideIndex);
   }
 
-  showPost(id: number){
+  showPost(id: number) {
     this.router.navigate([`/post/${id}`])
   }
 
@@ -77,5 +78,10 @@ export class HomeComponent {
 
     return `${day} de ${month}, ${year} • ${time}`;
   }
-
+  user = ""
+  searchUser() {
+    if (this.user !== "") {
+      window.location.href = `/search?query=${this.user}`
+    }
+  }
 }
