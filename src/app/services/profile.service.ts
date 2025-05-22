@@ -17,7 +17,7 @@ export class Profileservice {
     this.myApiUrl = 'api/profile'
   }
 
-  getProfile(userId: string): Observable<Profile> {
+  getProfile(userId: number): Observable<Profile> {
     return this.http.get<Profile>(`${this.myAppUrl}${this.myApiUrl}/${userId}`)
-  }
+  }
 }

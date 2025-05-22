@@ -44,8 +44,8 @@ export class SearchComponent {
     this.filteredUsers = this.getfilteredUsers()
   }
 
-  viewUser(email: string) {
-    window.location.href = `/profile/${email}`
+  viewUser(userId: number) {
+    window.location.href = `/profile/${userId}`
   }
 
 }

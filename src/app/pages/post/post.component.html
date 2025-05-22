@@ -1,82 +1,76 @@
 <div class="container">
-    <div class="post-header">
-        Publicación
-    </div>
-    
-    <div class="post-content">
-        <div class="main-content">
-            <div class="user-post">
-                <div class="user-info">
-                    <div class="avatar">{{post.userId.substring(0,2).toUpperCase()}}</div>
-                    <div class="user-details">
-                        <div class="username">{{post.userId}}</div>
-                        <div class="post-date">{{formatDate(post.date)}}</div>
-                    </div>
-                </div>
-                
-                <div class="topic-tag">
-                    <span class="tag">{{post.Topic.name}}</span>
-                </div>
+  <div class="post-header">Publicación</div>
 
-                <div class="message-box">
-                    {{post.message}}
-                </div>
-                
-                <div class="attachments-box">
-                    @for (item of post.Materials; track $index) {
-                        <div class="attachment-item">
-                            <div class="attachment-icon">
-                                @switch (item.type) {
-                                    @case ('document') {
-                                        <i class='bx bxs-file' ></i>
-                                    }
-                                    @case ('image') {
-                                        <i class='bx bxs-image' ></i>
-                                    }
-                                    @case ('video') {
-                                        <i class='bx bxs-video' ></i>
-                                    }
-                                    @case ('url') {
-                                        <i class='bx bx-link' ></i>
-                                    }
-                                    @default {
-                                        <i class='bx bx-question-mark'></i>
-                                    }           
-                                }
-                            </div>
-                            <div class="attachment-label">{{item.name}}</div>
-                        </div>
-                        
-                    } @empty {
-                        No hay archivos adjuntos.
-                    }
-                </div>
+  <div class="post-content">
+    <div class="main-content">
+      <div class="user-post">
+        <div class="user-info">
+          <div class="avatar">
+            {{ post.User.firstName.charAt(0)! || ""
+            }}{{ post.User.lastName.charAt(0)! || "" }}
+          </div>
+          <div class="user-details">
+            <div class="username">
+              {{ post.User.firstName || "" }} {{ post.User.lastName || "" }}
             </div>
+            <div class="post-date">{{ formatDate(post.date) }}</div>
+          </div>
         </div>
-        
-        <div class="comments-section">
-            <div class="comments-header">
-                Comentarios
-            </div>
 
-            @for (item of post.Comments; track $index) {
-                <div class="comment">
-                    <div class="comment-header">
-                        <div class="comment-avatar">{{item.userId.substring(0,2).toUpperCase()}}</div>
-                        <div class="comment-info">
-                            <div class="comment-user">{{item.userId}}</div>
-                            <div class="comment-date">{{formatDate(item.date)}}</div>
-                        </div>
-                    </div>
-                    <div class="comment-content">
-                        {{item.message}}
-                    </div>
-                </div>
-                
-            }
-            @empty {
-                <div class="no-comments">No hay comentarios aún.</div>
-            }
+        <div class="topic-tag">
+          <span class="tag">{{ post.Topic.name }}</span>
         </div>
+
+        <div class="message-box">
+          {{ post.message }}
+        </div>
+
+        <div class="attachments-box">
+          @for (item of post.Materials; track $index) {
+          <div class="attachment-item">
+            <div class="attachment-icon">
+              @switch (item.type) { @case ('document') {
+              <i class="bx bxs-file"></i>
+              } @case ('image') {
+              <i class="bx bxs-image"></i>
+              } @case ('video') {
+              <i class="bx bxs-video"></i>
+              } @case ('url') {
+              <i class="bx bx-link"></i>
+              } @default {
+              <i class="bx bx-question-mark"></i>
+              } }
+            </div>
+            <div class="attachment-label">{{ item.name }}</div>
+          </div>
+
+          } @empty { No hay archivos adjuntos. }
+        </div>
+      </div>
     </div>
+
+    <div class="comments-section">
+      <div class="comments-header">Comentarios</div>
+
+      @for (item of post.Comments; track $index) {
+      <div class="comment">
+        <div class="comment-header">
+          <div class="comment-avatar">
+            {{ item.userId.toString().substring(0, 1) }}
+          </div>
+          <div class="comment-info">
+            <div class="comment-user">Usuario #{{ item.userId }}</div>
+            <div class="comment-date">{{ formatDate(item.date) }}</div>
+          </div>
+        </div>
+        <div class="comment-content">
+          {{ item.message }}
+        </div>
+      </div>
+
+      } @empty {
+      <div class="no-comments">No hay comentarios aún.</div>
+      }
+    </div>
+  </div>
 </div>

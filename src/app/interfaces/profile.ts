@@ -2,6 +2,7 @@ import { Post } from "./post";
 import { User } from "./user";
 
 export interface Profile {
+    id: number,
     email: string,
     firstName: string,
     middleName: string,

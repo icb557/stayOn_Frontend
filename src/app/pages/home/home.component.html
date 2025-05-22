@@ -1,9 +1,21 @@
 <div class="home-container">
-    <div class="carousel-wrapper">
-          <img src="https://estudios.unad.edu.co/images/2024/SUA.jpg" class="carousel-slide active" alt="Slide 1">
-          <img src="https://estudios.unad.edu.co/images/2025/estrategias-digitales-de-comunicacion.jpg" class="carousel-slide" alt="Slide 2">
-          <img src="https://estudios.unad.edu.co/images/2024/Espanol-como-Segunda-Lengua.jpg" class="carousel-slide" alt="Slide 3">
-      </div>
+  <div class="carousel-wrapper">
+    <img
+      src="https://estudios.unad.edu.co/images/2024/SUA.jpg"
+      class="carousel-slide active"
+      alt="Slide 1"
+    />
+    <img
+      src="https://estudios.unad.edu.co/images/2025/estrategias-digitales-de-comunicacion.jpg"
+      class="carousel-slide"
+      alt="Slide 2"
+    />
+    <img
+      src="https://estudios.unad.edu.co/images/2024/Espanol-como-Segunda-Lengua.jpg"
+      class="carousel-slide"
+      alt="Slide 3"
+    />
+  </div>
   <!-- Panel para crear publicación -->
   <div class="post-creator-wrapper">
     <div class="post-creator">
@@ -32,60 +44,57 @@
     </div>
   </div>
 
-    <div class="container">
-        <div class="main-content">
+  <div class="container">
+    <div class="main-content">
+      <!-- Posts del usuario -->
+      <div class="posts-container">
+        @for (item of posts; track item.id; let i=$index) {
+        <div class="post-card">
+          <div class="post-author">
+            <div class="post-avatar">
+              {{ item.User.firstName.charAt(0).toUpperCase() || ""
+              }}{{ item.User.lastName.charAt(0).toUpperCase() || "" }}
+            </div>
+            <div class="post-author-info">
+              <div class="post-author-name" (click)="showProfile(item.userId)">
+                {{ item.User.firstName || "" }} {{ item.User.lastName || "" }}
+              </div>
+              <div class="post-date">{{ formatDate(item.date) }}</div>
+              <div class="post-tag">{{ item.Topic.name }}</div>
+            </div>
+          </div>
+          <div class="post-content">
+            {{ item.message }}
+          </div>
+          <div class="post-attachments">
+            @for (item of item.Materials; track $index) {
+            <div class="attachments-box">
+              <div class="attachment">
+                @switch (item.type) { @case ('document') {
+                <i class="bx bxs-file"></i>
+                } @case ('image') {
+                <i class="bx bxs-image"></i>
+                } @case ('video') {
+                <i class="bx bxs-video"></i>
+                } @case ('url') {
+                <i class="bx bx-link"></i>
+                } @default {
+                <i class="bx bx-question-mark"></i>
+                } }
+              </div>
+              <div class="attachment-label">{{ item.name }}</div>
+            </div>
 
-            <!-- Posts del usuario -->
-            <div class="posts-container">
-                @for (item of posts; track item.id; let i=$index) {
-                <div class="post-card">
-                    <div class="post-author">
-                        <div class="post-avatar">{{item.userId.substring(0,2).toUpperCase()}}</div>
-                        <div class="post-author-info">
-                            <div class="post-author-name"(click)="showProfile(item.userId)" >{{item.userId}}</div>
-                            <div class="post-date">{{formatDate(item.date)}}</div>
-                            <div class="post-tag">{{item.Topic.name}}</div>
-                        </div>
-                    </div>
-                    <div class="post-content">
-                        {{item.message}}
-                    </div>
-                    <div class="post-attachments">
-                        @for (item of item.Materials; track $index) {
-                            <div class="attachments-box">
-                                <div class="attachment">
-                                    @switch (item.type) {
-                                        @case ('document') {
-                                            <i class='bx bxs-file' ></i>
-                                        }
-                                        @case ('image') {
-                                            <i class='bx bxs-image' ></i>
-                                        }
-                                        @case ('video') {
-                                            <i class='bx bxs-video' ></i>
-                                        }
-                                        @case ('url') {
-                                            <i class='bx bx-link' ></i>
-                                        }
-                                        @default {
-                                            <i class='bx bx-question-mark'></i>
-                                        }           
-                                    }
-                                </div>
-                                <div class="attachment-label">{{item.name}}</div>
-                            </div>
-                            
-                        } @empty {
-                            No hay archivos adjuntos.
-                        }
-                    </div>
-                    <div class="post-footer">
-                        <hr class="post-separator">
-                        <button class="comment-btn" (click)="showPost(item.id)" >Ver publicación</button>
-                    </div>
-                </div>
-            }
-
+            } @empty { No hay archivos adjuntos. }
+          </div>
+          <div class="post-footer">
+            <hr class="post-separator" />
+            <button class="comment-btn" (click)="showPost(item.id)">
+              Ver publicación
+            </button>
+          </div>
+        </div>
+        }
       </div>
     </div>
 

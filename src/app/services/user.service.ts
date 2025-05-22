@@ -14,23 +14,27 @@ export class UserService {
     this.myApiUrl = 'api/user';
   }
 
-  getUser(email: string): Observable<User> {
-    return this.http.get<User>(`${this.myAppUrl}${this.myApiUrl}/${email}`);
+  getUser(id: number): Observable<User> {
+    return this.http.get<User>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
+  }
+
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.myAppUrl}${this.myApiUrl}/${id}`);
   }
 
   createUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.myAppUrl}${this.myApiUrl}`, user);
   }
 
-  updateUser(email: string, user: Partial<User>): Observable<User> {
+  updateUser(id: number, user: Partial<User>): Observable<User> {
     return this.http.put<User>(
-      `${this.myAppUrl}${this.myApiUrl}/${email}`,
+      `${this.myAppUrl}${this.myApiUrl}/${id}`,
       user
     );
   }
 
-  deleteUser(email: string): Observable<any> {
-    return this.http.delete(`${this.myAppUrl}${this.myApiUrl}/${email}`);
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.myAppUrl}${this.myApiUrl}/${id}`);
   }
 
   login(email: string, password: string): Observable<any> {

@@ -9,16 +9,16 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   userName: string = '';
-  userId: string = '';
+  userId: number = 0;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     const name = localStorage.getItem('firstName');
-    const userId = localStorage.getItem('email');
-    if (name) {
+    const userId = localStorage.getItem('id');
+    if (name && userId) {
       this.userName = name;
-      this.userId = userId!;
+      this.userId = +userId;
     }
   }
 
@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  goToProfile(userId: string): void {
+  goToProfile(userId: number): void {
     this.router.navigate([`/profile/${userId}`]);
   }
 }

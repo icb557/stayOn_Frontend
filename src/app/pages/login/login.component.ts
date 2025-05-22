@@ -26,9 +26,9 @@ export class LoginComponent {
           localStorage.setItem('role', data.role);
           localStorage.setItem('email', data.email);
           localStorage.setItem('firstName', data.firstName);
+          localStorage.setItem('id', data.id.toString());
 
           this.router.navigate(['/']);
-         
         },
         error: (e: HttpErrorResponse) => {
           alert('Invalid credentials');

@@ -13,14 +13,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ProfileComponent {
   profile: Profile= {} as Profile
-  userId: string= ''
+  userId: number = 0
 
   constructor(private aRouter: ActivatedRoute, private _profileService: Profileservice, private router: Router) {
   }
 
   ngOnInit(): void {
     this.aRouter.paramMap.subscribe(params => {
-      this.userId = params.get('userId')!;
+      this.userId = +params.get('userId')!;
       this.getProfile();
     });
   }
@@ -29,7 +29,7 @@ export class ProfileComponent {
     this.router.navigate([`/post/${id}`])
   }
 
-  showProfile(id: string) {
+  showProfile(id: number) {
     this.router.navigate([`/profile/${id}`])
   }
   
@@ -66,6 +66,7 @@ export class ProfileComponent {
   }
 
   myProfile() {
-    return this.userId === localStorage.getItem('email')
+    const currentUserId = localStorage.getItem('id');
+    return currentUserId && this.userId === +currentUserId;
   }
 }

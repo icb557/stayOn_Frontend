@@ -23,8 +23,8 @@
       <!-- lista de usuarios encontrados -->
       <h3 class="title">Usuarios Encontrados</h3>
       <div class="search-results">
-        @for (item of filteredUsers; track item.email; let i=$index) {
-        <div class="user-details" (click)="viewUser(item.email)">
+        @for (item of filteredUsers; track item.id; let i=$index) {
+        <div class="user-details" (click)="viewUser(item.id)">
           <p class="post-avatar">
             {{ item.email.substring(0, 2).toUpperCase() }}
           </p>

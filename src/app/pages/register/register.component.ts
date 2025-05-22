@@ -31,7 +31,7 @@ export class RegisterComponent {
   constructor(private router: Router, private _userserService: UserService) {}
   saveUser() {
     if (this.userForm.valid) {
-      const user: User = {
+      const user: Omit<User, 'id'> = {
         email: this.userForm.value.email!,
         password: this.userForm.value.password!,
         firstName: this.userForm.value.firstName!,
@@ -42,8 +42,7 @@ export class RegisterComponent {
         role: 'student',
         age: Number(this.userForm.value.age)!,
       };
-      console.log(user);
-      this._userserService.createUser(user).subscribe((data) => {
+      this._userserService.createUser(user as User).subscribe((data) => {
         Swal.fire({
           title: 'User Created Successfully',
           icon: 'success',

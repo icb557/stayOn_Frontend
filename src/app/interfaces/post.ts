@@ -1,12 +1,14 @@
 import { Comment } from "./comment";
 import { Material } from "./material";
 import { Topic } from "./topic";
+import { User } from "./user";
 
 export interface Post {
     id: number,
     message: string,
     date: string,
-    userId: string,
+    userId: number,
+    User: User,
     Comments: Comment[],
     Materials: Material[],
     Topic: Topic
@@ -17,7 +19,7 @@ export interface PostCreate {
     message: string,
     date: string,
     topicId: number,
-    userId: string,
+    userId: number,
     materials: {
         name: string,
         uri: string,
