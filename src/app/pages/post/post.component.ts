@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../../services/post.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Post } from '../../interfaces/post';
@@ -16,7 +16,7 @@ export class PostComponent implements OnInit {
   id: number = 0
   post: Post = {} as Post
 
-  constructor(private aRouter: ActivatedRoute, private _postService: PostService) {
+  constructor(private router: Router, private aRouter: ActivatedRoute, private _postService: PostService) {
     this.id = Number(this.aRouter.snapshot.paramMap.get('id')!)
   }
   
@@ -55,5 +55,9 @@ export class PostComponent implements OnInit {
     const time = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false });
 
     return `${day} de ${month}, ${year} • ${time}`;
+  }
+
+  showProfile(id: number) {
+    this.router.navigate([`/profile/${id}`])
   }
 }

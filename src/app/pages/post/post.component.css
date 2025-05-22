@@ -192,10 +192,12 @@ body {
     color: var(--white);
     font-size: 14px;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 .comment-info {
     flex-grow: 1;
+    cursor: pointer;
 }
 
 .comment-user {

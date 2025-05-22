@@ -16,6 +16,8 @@ export class HomeComponent {
   posts: Post[] = []
   currentSlideIndex = 0;
   slides!: NodeListOf<Element>;
+  userName = localStorage.getItem('firstName')!;
+
   constructor(private _postService: PostService , private router: Router) {}
 
   ngOnInit(): void {

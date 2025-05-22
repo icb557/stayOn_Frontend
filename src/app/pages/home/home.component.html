@@ -23,7 +23,7 @@
       <div class="post-body">
         <textarea
           class="post-message"
-          placeholder="¿Qué estás pensando?"
+          placeholder="¿Qué estás pensando {{userName ? userName : ''}}?"
         ></textarea>
 
         <input
@@ -51,13 +51,21 @@
         @for (item of posts; track item.id; let i=$index) {
         <div class="post-card">
           <div class="post-author">
-            <div class="post-avatar">
+            <div class="post-avatar" (click)="showProfile(item.userId)">
               {{ item.User.firstName.charAt(0).toUpperCase() || ""
               }}{{ item.User.lastName.charAt(0).toUpperCase() || "" }}
             </div>
             <div class="post-author-info">
               <div class="post-author-name" (click)="showProfile(item.userId)">
-                {{ item.User.firstName || "" }} {{ item.User.lastName || "" }}
+                {{
+                  item.User.firstName +
+                    " " +
+                    (item.User.middleName ? item.User.middleName : "") +
+                    " " +
+                    item.User.lastName +
+                    " " +
+                    (item.User.secondLastName ? item.User.secondLastName : "")
+                }}
               </div>
               <div class="post-date">{{ formatDate(item.date) }}</div>
               <div class="post-tag">{{ item.Topic.name }}</div>

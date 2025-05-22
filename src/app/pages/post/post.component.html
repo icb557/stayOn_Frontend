@@ -11,7 +11,15 @@
           </div>
           <div class="user-details">
             <div class="username">
-              {{ post.User.firstName || "" }} {{ post.User.lastName || "" }}
+              {{
+                post.User.firstName +
+                  " " +
+                  (post.User.middleName ? post.User.middleName : "") +
+                  " " +
+                  post.User.lastName +
+                  " " +
+                  (post.User.secondLastName ? post.User.secondLastName : "")
+              }}
             </div>
             <div class="post-date">{{ formatDate(post.date) }}</div>
           </div>
@@ -55,11 +63,19 @@
       @for (item of post.Comments; track $index) {
       <div class="comment">
         <div class="comment-header">
-          <div class="comment-avatar">
-            {{ item.userId.toString().substring(0, 1) }}
+          <div class="comment-avatar" (click)="showProfile(item.userId)">
+            {{((item.User.firstName.charAt(0)! || "") + (item.User.lastName.charAt(0)! || "")).toUpperCase()}}
           </div>
           <div class="comment-info">
-            <div class="comment-user">Usuario #{{ item.userId }}</div>
+            <div class="comment-user" (click)="showProfile(item.userId)">{{
+              item.User.firstName +
+                " " +
+                (item.User.middleName ? item.User.middleName : "") +
+                " " +
+                item.User.lastName +
+                " " +
+                (item.User.secondLastName ? item.User.secondLastName : "")
+            }}</div>
             <div class="comment-date">{{ formatDate(item.date) }}</div>
           </div>
         </div>

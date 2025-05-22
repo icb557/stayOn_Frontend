@@ -63,7 +63,15 @@
             }}
           </div>
           <div class="post-author-info">
-            <div class="post-author-name">{{ profile.email }}</div>
+            <div class="post-author-name">{{
+              profile.firstName +
+                " " +
+                (profile.middleName ? profile.middleName : "") +
+                " " +
+                profile.lastName +
+                " " +
+                (profile.secondLastName ? profile.secondLastName : "")
+            }}</div>
             <div class="post-date">{{ formatDate(item.date) }}</div>
             <div class="post-tag">{{ item.Topic.name }}</div>
           </div>
