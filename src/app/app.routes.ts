@@ -7,6 +7,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SearchComponent } from './pages/search/search.component';
+import { TopicComponent } from './pages/topic/topic.component';
 
 export const routes: Routes = [{
     title: 'Home',
@@ -42,6 +43,10 @@ export const routes: Routes = [{
     title: 'search',
     path: 'search',
     component: SearchComponent
+}, {
+    title: 'topic',
+    path: 'topic/:id',
+    component: TopicComponent
 }, {
     path: '**',
     redirectTo: '',

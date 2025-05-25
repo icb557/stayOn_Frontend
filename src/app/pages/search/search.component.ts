@@ -3,6 +3,8 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { TopicService } from '../../services/topic.service';
+import { Topic } from '../../interfaces/topic';
 
 @Component({
   selector: 'app-search',
@@ -14,8 +16,10 @@ export class SearchComponent {
 
   users: User[] = [];
   filteredUsers: User[] = [];
+  topics: Topic[] = []
+  filteredTopics: Topic[] = [];
   query = ''
-  constructor(private _userService: UserService, private route: ActivatedRoute) {
+  constructor(private _userService: UserService, private _topicService: TopicService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.query = params['query'] || '';
     });
@@ -23,6 +27,7 @@ export class SearchComponent {
 
   ngOnInit() {
     this.getUsers();
+    this.getTopics();
   }
 
   getUsers() {
@@ -40,12 +45,32 @@ export class SearchComponent {
     });
   }
 
-  searchUser() {
+  getTopics() {
+    this._topicService.getTopics().subscribe((data: Topic[]) => {
+      this.topics = data;
+      this.filteredTopics = this.getFilteredtopics();
+      console.log(this.topics)
+      console.log(this.filteredTopics)
+    });
+  }
+
+  getFilteredtopics(): Topic[] {
+    const queryLower = this.query.toLowerCase();
+    return this.topics.filter(topic => topic.name.toLowerCase().includes(queryLower));
+  }
+
+  search() {
     this.filteredUsers = this.getfilteredUsers()
+    this.filteredTopics = this.getFilteredtopics();
+    console.log(this.filteredTopics)
   }
 
   viewUser(userId: number) {
     window.location.href = `/profile/${userId}`
+  }
+
+  viewTopic(topicId: number) {
+    window.location.href = `/topic/${topicId}`;
   }
 
 }
