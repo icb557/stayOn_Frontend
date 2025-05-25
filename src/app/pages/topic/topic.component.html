@@ -1,1 +1,106 @@
-<p>topic works!</p>
+<div class="container">
+  <div class="post-header">Publicaciones Sobre {{ topicName }}</div>
+</div>
+@for (post of posts; track post.id; let i = $index) {
+<div class="container">
+  <div class="post-content">
+    <div class="main-content">
+      <div class="user-post">
+        <div class="user-info">
+          <div class="avatar" (click)="showProfile(post.userId)">
+            {{ post.User.firstName.charAt(0)! || ""
+            }}{{ post.User.lastName.charAt(0)! || "" }}
+          </div>
+          <div class="user-details" (click)="showProfile(post.userId)">
+            <div class="username">
+              {{
+                post.User.firstName +
+                  " " +
+                  (post.User.middleName ? post.User.middleName : "") +
+                  " " +
+                  post.User.lastName +
+                  " " +
+                  (post.User.secondLastName ? post.User.secondLastName : "")
+              }}
+            </div>
+            <div class="post-date">{{ formatDate(post.date) }}</div>
+          </div>
+        </div>
+
+        <div class="topic-tag">
+          <span class="tag">{{ post.Topic.name }}</span>
+        </div>
+
+        <div class="message-box">
+          {{ post.message }}
+        </div>
+
+        <div class="attachments-box">
+          @for (item of post.Materials; track $index) {
+          <div class="attachment-item">
+            <div class="attachment-icon">
+              @switch (item.type) { @case ('document') {
+              <i class="bx bxs-file"></i>
+              } @case ('image') {
+              <i class="bx bxs-image"></i>
+              } @case ('video') {
+              <i class="bx bxs-video"></i>
+              } @case ('url') {
+              <i class="bx bx-link"></i>
+              } @default {
+              <i class="bx bx-question-mark"></i>
+              } }
+            </div>
+            <div class="attachment-label">{{ item.name }}</div>
+          </div>
+
+          } @empty { No hay archivos adjuntos. }
+        </div>
+      </div>
+    </div>
+
+    <div class="comments-section">
+      <div class="comments-header">Comentarios</div>
+
+      @for (item of post.Comments; track $index) {
+      <div class="comment">
+        <div class="comment-header">
+          <div class="comment-avatar" (click)="showProfile(item.userId)">
+            {{
+              (
+                (item.User.firstName.charAt(0)! || "") +
+                (item.User.lastName.charAt(0)! || "")
+              ).toUpperCase()
+            }}
+          </div>
+          <div class="comment-info">
+            <div class="comment-user" (click)="showProfile(item.userId)">
+              {{
+                item.User.firstName +
+                  " " +
+                  (item.User.middleName ? item.User.middleName : "") +
+                  " " +
+                  item.User.lastName +
+                  " " +
+                  (item.User.secondLastName ? item.User.secondLastName : "")
+              }}
+            </div>
+            <div class="comment-date">{{ formatDate(item.date) }}</div>
+          </div>
+        </div>
+        <div class="comment-content">
+          {{ item.message }}
+        </div>
+      </div>
+
+      } @empty {
+      <div class="no-comments">No hay comentarios aún.</div>
+      }
+    </div>
+  </div>
+</div>
+}@empty {
+<div class="container">
+  <div class="post-header">No hay publicaciones aún</div>
+</div>
+}

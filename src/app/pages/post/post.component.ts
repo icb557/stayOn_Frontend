@@ -19,12 +19,12 @@ export class PostComponent implements OnInit {
   constructor(private router: Router, private aRouter: ActivatedRoute, private _postService: PostService) {
     this.id = Number(this.aRouter.snapshot.paramMap.get('id')!)
   }
-  
+
   ngOnInit(): void {
     this.getPost()
   }
 
-  getPost(){
+  getPost() {
     this._postService.getPostById(this.id).subscribe({
       next: (data) => {
         this.post = data
