@@ -9,7 +9,7 @@
           }}
         </div>
         @if (myProfile()) {
-        <button class="edit-button">
+        <button class="edit-button" (click)="updateProfile()">
           <i class="bx bxs-pencil"></i>
         </button>
         }
@@ -117,8 +117,8 @@
     <div class="following-list">
       @for (item of profile.Following; track $index;let i=$index) {
       <div class="following-item">
-        <div class="following-avatar">{{(item.firstName.substring(0, 1) +
-            item.lastName.substring(0, 1)).toUpperCase()}}</div>
+        <div class="following-avatar">{{ (item.firstName ? item.firstName.substring(0, 1) : '') +
+   (item.lastName ? item.lastName.substring(0, 1).toUpperCase() : '') }}</div>
         <div class="following-info">
           <div class="following-name" (click)="showProfile(item.id)">
             {{
@@ -138,4 +138,47 @@
       }
     </div>
   </div>
+  @if (showUserForm) {
+  <div class="edit-profile-wrapper">
+    <div class="edit-profile-card">
+      <img src="logo.png" class="logo-img" />
+      <h2>Editar Perfil</h2>
+      <form class="manage-form" [formGroup]="userForm">
+        <div class="form-group">
+          <label for="firstName">Nombre</label>
+          <input type="text" id="firstName" formControlName="firstName" />
+        </div>
+  
+        <div class="form-group">
+          <label for="middleName">Segundo Nombre (opcional)</label>
+          <input type="text" id="middleName" formControlName="middleName" />
+        </div>
+  
+        <div class="form-group">
+          <label for="lastName">Primer Apellido</label>
+          <input type="text" id="lastName" formControlName="lastName" />
+        </div>
+  
+        <div class="form-group">
+          <label for="secondLastName">Segundo Apellido (opcional)</label>
+          <input type="text" id="secondLastName" formControlName="secondLastName" />
+        </div>
+  
+        <div class="form-group">
+          <label for="major">Carrera</label>
+          <input type="text" id="major" formControlName="major" />
+        </div>
+  
+        <div class="form-group">
+          <label for="age">Edad</label>
+          <input type="number" id="age" formControlName="age" />
+        </div>
+  
+        <button type="submit" (click)="saveData()">Guardar Cambios</button>
+        <button type="cancel" (click)="cancelEdit()">Cancelar</button>
+      </form>
+    </div>
+  </div>
+}
+  
 </div>

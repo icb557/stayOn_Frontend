@@ -52,8 +52,8 @@
         <div class="post-card">
           <div class="post-author">
             <div class="post-avatar" (click)="showProfile(item.userId)">
-              {{ item.User.firstName.charAt(0).toUpperCase() || ""
-              }}{{ item.User.lastName.charAt(0).toUpperCase() || "" }}
+              {{ item.User.firstName!.charAt(0).toUpperCase() || ""
+              }}{{ item.User.lastName!.charAt(0).toUpperCase() || "" }}
             </div>
             <div class="post-author-info">
               <div class="post-author-name" (click)="showProfile(item.userId)">
