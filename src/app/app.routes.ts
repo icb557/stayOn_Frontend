@@ -8,6 +8,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SearchComponent } from './pages/search/search.component';
 import { TopicComponent } from './pages/topic/topic.component';
+import { AboutSupportComponent } from './pages/about-support/about-support.component';
 
 export const routes: Routes = [{
     title: 'Home',
@@ -47,6 +48,10 @@ export const routes: Routes = [{
     title: 'topic',
     path: 'topic/:id',
     component: TopicComponent
+}, {
+    title: 'about-support',
+    path: 'about-support',
+    component: AboutSupportComponent,
 }, {
     path: '**',
     redirectTo: '',
