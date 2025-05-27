@@ -7,20 +7,22 @@ import { Profile } from '../../interfaces/profile';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { FollowerService } from '../../services/follower.service';
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  profile: Profile= {} as Profile
+  profile: Profile = {} as Profile
   userId: number = 0
-  showUserForm= false 
+  showUserForm = false
 
-  
-  constructor(private aRouter: ActivatedRoute, private _profileService: Profileservice, private _userService: UserService, private router: Router) {
+
+  constructor(private aRouter: ActivatedRoute, private _profileService: Profileservice, private _userService: UserService, private _followService: FollowerService, private router: Router) {
   }
 
   userForm = new FormGroup({
@@ -36,6 +38,7 @@ export class ProfileComponent {
     this.aRouter.paramMap.subscribe(params => {
       this.userId = +params.get('userId')!;
       this.getProfile();
+      this.getFollowingUser();
     });
   }
 
@@ -47,15 +50,15 @@ export class ProfileComponent {
     this.router.navigate([`/profile/${id}`])
   }
 
-  updateProfile(){
-    this.showUserForm= true
+  updateProfile() {
+    this.showUserForm = true
     this.userForm.setValue({
-    firstName: this.profile.firstName,
-    middleName: this.profile.middleName,
-    lastName: this.profile.lastName,
-    secondLastName: this.profile.secondLastName,
-    major: this.profile.major,
-    age: this.profile.age
+      firstName: this.profile.firstName,
+      middleName: this.profile.middleName,
+      lastName: this.profile.lastName,
+      secondLastName: this.profile.secondLastName,
+      major: this.profile.major,
+      age: this.profile.age
     })
   }
   saveData() {
@@ -69,7 +72,7 @@ export class ProfileComponent {
       });
       return;
     }
-  
+
     const user = this.userForm.value as User;
     this._userService.updateUser(this.userId, user).subscribe({
       next: (data) => {
@@ -95,11 +98,11 @@ export class ProfileComponent {
     });
   }
   cancelEdit() {
-    this.showUserForm=false
+    this.showUserForm = false
     this.userForm.reset();
   }
 
-  getProfile(){
+  getProfile() {
     this._profileService.getProfile(this.userId).subscribe({
       next: (data) => {
         this.profile = data
@@ -136,5 +139,119 @@ export class ProfileComponent {
     return currentUserId && this.userId === +currentUserId;
   }
 
- 
+  isFollowing = true;
+  isHovered = false;
+  hoveredIndex: number | null = null;
+  FollowingUser: User[] = [];
+
+  getFollowingUser() {
+    const currentUserId = localStorage.getItem('id');
+    if (currentUserId) {
+      this._followService.getFollowing(+currentUserId).subscribe({
+        next: (data) => {
+          this.FollowingUser = data;
+        },
+        error: (e: HttpErrorResponse) => {
+          console.error('Error fetching following users', e);
+        }
+      });
+    }
+  }
+
+  onMouseEnter() {
+    this.isHovered = true;
+  }
+
+  onMouseLeave() {
+    this.isHovered = false;
+  }
+
+  userIsFollowing(id: number) {
+    return this.FollowingUser.some(user => user.id === id);
+  }
+
+  isMyProfile(id: number): boolean {
+    const currentUserId = localStorage.getItem('id');
+    return currentUserId ? id === +currentUserId : false;
+
+  }
+
+  followUser(id: number) {
+    const currentUserId = localStorage.getItem('id');
+    if (currentUserId) {
+      this._followService.followUser(+currentUserId, id).subscribe({
+        next: () => {
+          this.isFollowing = true;
+          this.getFollowingUser();
+          Swal.fire({
+            title: 'Usuario seguido',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1200,
+          }).then(() => {
+            window.location.reload();
+          });
+        },
+        error: (e: HttpErrorResponse) => {
+          console.error('Error following user', e);
+          Swal.fire({
+            title: 'Error!',
+            text: 'No se pudo seguir al usuario',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1200,
+          });
+        }
+      });
+    }
+  }
+
+  unFollow(id: number) {
+    const currentUserId = localStorage.getItem('id');
+    if (currentUserId) {
+      Swal.fire({
+        title: "Dejar de seguir usuario",
+        text: "Seguro que quieres dejar de seguir a este usuario?",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, dejar de seguir",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.unFollowUser(Number(currentUserId), id);
+        }
+      });
+    }
+  }
+
+  unFollowUser(currentUserId: number, id: number) {
+    this._followService.unfollowUser(+currentUserId, id).subscribe({
+      next: () => {
+        this.isFollowing = false;
+        this.getFollowingUser();
+        Swal.fire({
+          title: 'Usuario dejado de seguir',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1200,
+        }).then(() => {
+          window.location.reload();
+        });
+      },
+      error: (e: HttpErrorResponse) => {
+        console.error('Error unfollowing user', e);
+        Swal.fire({
+          title: 'Error!',
+          text: 'No se pudo dejar de seguir al usuario',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1200,
+        });
+      }
+    });
+  }
+
+
 }

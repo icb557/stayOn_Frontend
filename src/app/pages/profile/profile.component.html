@@ -5,7 +5,10 @@
       <div class="profile-header">
         <div class="profile-avatar">
           {{
-            (profile.firstName.substring(0, 1) + profile.lastName.substring(0, 1)).toUpperCase()
+            (
+              profile.firstName.substring(0, 1) +
+              profile.lastName.substring(0, 1)
+            ).toUpperCase()
           }}
         </div>
         @if (myProfile()) {
@@ -15,17 +18,40 @@
         }
       </div>
       <div class="profile-info">
-        <h2 class="profile-name">
-          {{
-            profile.firstName +
-              " " +
-              (profile.middleName ? profile.middleName : "") +
-              " " +
-              profile.lastName +
-              " " +
-              (profile.secondLastName ? profile.secondLastName : "")
-          }}
-        </h2>
+        <div class="profile-name-container">
+          <h2 class="profile-name">
+            {{
+              profile.firstName +
+                " " +
+                (profile.middleName ? profile.middleName : "") +
+                " " +
+                profile.lastName +
+                " " +
+                (profile.secondLastName ? profile.secondLastName : "")
+            }}
+          </h2>
+          @if (!myProfile() && userIsFollowing(profile.id)) {
+          <button
+            class="btn-follow btn-following"
+            (mouseenter)="onMouseEnter()"
+            (mouseleave)="onMouseLeave()"
+            [ngClass]="{
+              following: isFollowing,
+              unfollow: isHovered && isFollowing
+            }"
+            (click)="unFollow(profile.id)"
+          >
+            {{ isHovered && isFollowing ? "Dejar de seguir" : "Siguiendo" }}
+          </button>
+          }@else if (!myProfile() && !userIsFollowing(profile.id)) {
+          <button
+            class="btn-follow btn-following"
+            (click)="followUser(profile.id)"
+          >
+            Seguir
+          </button>
+          }
+        </div>
         <div class="profile-detail">
           <i class="bx bx-envelope"></i>
           <p>{{ profile.email }}</p>
@@ -58,20 +84,24 @@
         <div class="post-author">
           <div class="post-avatar">
             {{
-              (profile.firstName.substring(0, 1) +
-                profile.lastName.substring(0, 1)).toUpperCase()
+              (
+                profile.firstName.substring(0, 1) +
+                profile.lastName.substring(0, 1)
+              ).toUpperCase()
             }}
           </div>
           <div class="post-author-info">
-            <div class="post-author-name">{{
-              profile.firstName +
-                " " +
-                (profile.middleName ? profile.middleName : "") +
-                " " +
-                profile.lastName +
-                " " +
-                (profile.secondLastName ? profile.secondLastName : "")
-            }}</div>
+            <div class="post-author-name">
+              {{
+                profile.firstName +
+                  " " +
+                  (profile.middleName ? profile.middleName : "") +
+                  " " +
+                  profile.lastName +
+                  " " +
+                  (profile.secondLastName ? profile.secondLastName : "")
+              }}
+            </div>
             <div class="post-date">{{ formatDate(item.date) }}</div>
             <div class="post-tag">{{ item.Topic.name }}</div>
           </div>
@@ -117,8 +147,12 @@
     <div class="following-list">
       @for (item of profile.Following; track $index;let i=$index) {
       <div class="following-item">
-        <div class="following-avatar">{{ (item.firstName ? item.firstName.substring(0, 1) : '') +
-   (item.lastName ? item.lastName.substring(0, 1).toUpperCase() : '') }}</div>
+        <div class="following-avatar">
+          {{
+            (item.firstName ? item.firstName.substring(0, 1) : "") +
+              (item.lastName ? item.lastName.substring(0, 1).toUpperCase() : "")
+          }}
+        </div>
         <div class="following-info">
           <div class="following-name" (click)="showProfile(item.id)">
             {{
@@ -133,7 +167,24 @@
           </div>
           <div class="following-program">{{ item.major }}</div>
         </div>
-        <button class="btn-follow btn-following">Siguiendo</button>
+        @if (userIsFollowing(item.id) && !isMyProfile(item.id)) {
+        <button
+          class="btn-follow btn-following"
+          (mouseenter)="hoveredIndex = i"
+          (mouseleave)="hoveredIndex = null"
+          [ngClass]="{
+            following: true,
+            unfollow: hoveredIndex === i
+          }"
+          (click)="unFollow(item.id)"
+        >
+          {{ hoveredIndex === i ? "Dejar de seguir" : "Siguiendo" }}
+        </button>
+        }@else if (!userIsFollowing(item.id) && !isMyProfile(item.id)){
+        <button class="btn-follow btn-following" (click)="followUser(item.id)">
+          Seguir
+        </button>
+        }
       </div>
       }
     </div>
@@ -148,37 +199,40 @@
           <label for="firstName">Nombre</label>
           <input type="text" id="firstName" formControlName="firstName" />
         </div>
-  
+
         <div class="form-group">
           <label for="middleName">Segundo Nombre (opcional)</label>
           <input type="text" id="middleName" formControlName="middleName" />
         </div>
-  
+
         <div class="form-group">
           <label for="lastName">Primer Apellido</label>
           <input type="text" id="lastName" formControlName="lastName" />
         </div>
-  
+
         <div class="form-group">
           <label for="secondLastName">Segundo Apellido (opcional)</label>
-          <input type="text" id="secondLastName" formControlName="secondLastName" />
+          <input
+            type="text"
+            id="secondLastName"
+            formControlName="secondLastName"
+          />
         </div>
-  
+
         <div class="form-group">
           <label for="major">Carrera</label>
           <input type="text" id="major" formControlName="major" />
         </div>
-  
+
         <div class="form-group">
           <label for="age">Edad</label>
           <input type="number" id="age" formControlName="age" />
         </div>
-  
+
         <button type="submit" (click)="saveData()">Guardar Cambios</button>
         <button type="cancel" (click)="cancelEdit()">Cancelar</button>
       </form>
     </div>
   </div>
-}
-  
+  }
 </div>
