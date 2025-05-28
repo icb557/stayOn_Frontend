@@ -60,28 +60,89 @@
     <div class="comments-section">
       <div class="comments-header">Comentarios</div>
 
+      <form
+        [formGroup]="commentForm"
+        (ngSubmit)="createComment()"
+        class="comment-form"
+      >
+        <div class="form-group">
+          <textarea
+            formControlName="message"
+            placeholder="Escribe tu comentario aquí..."
+            class="comment-input"
+            rows="3"
+          >
+          </textarea>
+        </div>
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="submit-btn"
+            [disabled]="!commentForm.valid"
+          >
+            Publicar comentario
+          </button>
+        </div>
+      </form>
+
       @for (item of post.Comments; track $index) {
       <div class="comment">
         <div class="comment-header">
           <div class="comment-avatar" (click)="showProfile(item.userId)">
-            {{((item.User.firstName.charAt(0)! || "") + (item.User.lastName.charAt(0)! || "")).toUpperCase()}}
+            {{
+              (
+                (item.User.firstName.charAt(0)! || "") +
+                (item.User.lastName.charAt(0)! || "")
+              ).toUpperCase()
+            }}
           </div>
           <div class="comment-info">
-            <div class="comment-user" (click)="showProfile(item.userId)">{{
-              item.User.firstName +
-                " " +
-                (item.User.middleName ? item.User.middleName : "") +
-                " " +
-                item.User.lastName +
-                " " +
-                (item.User.secondLastName ? item.User.secondLastName : "")
-            }}</div>
+            <div class="comment-user" (click)="showProfile(item.userId)">
+              {{
+                item.User.firstName +
+                  " " +
+                  (item.User.middleName ? item.User.middleName : "") +
+                  " " +
+                  item.User.lastName +
+                  " " +
+                  (item.User.secondLastName ? item.User.secondLastName : "")
+              }}
+            </div>
             <div class="comment-date">{{ formatDate(item.date) }}</div>
           </div>
+          @if (item.userId === currentUserId) {
+          <div>
+            <button (click)="startEditComment(item)" class="edit-btn">
+              <i class="bx bx-pencil"></i>
+            </button>
+            <button (click)="deleteComment(item.id)" class="delete-btn">
+              <i class="bx bx-trash-alt"></i>
+            </button>
+          </div>
+          }
         </div>
+        @if (editingCommentId === item.id) {
+        <div class="form-group">
+          <textarea
+            [(ngModel)]="editedMessage"
+            placeholder="Edita tu comentario..."
+            rows="3"
+            class="comment-input"
+          ></textarea>
+          <div class="form-actions">
+            <button (click)="saveEditComment(item.id)" class="save-btn">
+              Guardar
+            </button>
+              <button (click)="cancelEdit()" class="cancel-btn">
+                Cancelar
+              </button>
+          </div>
+        </div>
+        } @else {
         <div class="comment-content">
           {{ item.message }}
         </div>
+        }
       </div>
 
       } @empty {
