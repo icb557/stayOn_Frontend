@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Topic } from '../../interfaces/topic';
 import { TopicService } from '../../services/topic.service';
+import { Material } from '../../interfaces/material';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,7 @@ export class HomeComponent {
 
   constructor(private _postService: PostService, private _topicService: TopicService, private router: Router, private fb: FormBuilder) {
     this.publishForm = this.fb.group({
-      message: ['', { validators: [Validators.required, Validators.minLength(5), Validators.maxLength(500)] }],
+      message: ['', { validators: [Validators.required, Validators.minLength(4), Validators.maxLength(500)] }],
       topicId: ['', { validators: [Validators.required] }],
     });
   }
@@ -155,6 +156,10 @@ export class HomeComponent {
     this.selectedFiles = selectedFiles;
   }
 
+  removeFile(index: number): void {
+    this.selectedFiles.splice(index, 1);
+  }
+
   onSubmit() {
 
     if (this.publishForm.invalid) {
@@ -198,5 +203,32 @@ export class HomeComponent {
         });
       }
     });
+  }
+
+  getFileType(mimetype: string) {
+    if (mimetype.startsWith('image/')) return 'image';
+    if (mimetype.startsWith('video/')) return 'video';
+    if (
+      mimetype === 'application/pdf' ||
+      mimetype.includes('ms') ||
+      mimetype.includes('officedocument') ||
+      mimetype === 'text/plain'
+    ) return 'document';
+    return 'other';
+  }
+
+  filterImages(materials: Material[]) {
+    return materials.filter(material => material.type.startsWith('image/'));
+  }
+  filterVideos(materials: Material[]) {
+    return materials.filter(material => material.type.startsWith('video/'));
+  }
+  filterDocuments(materials: Material[]) {
+    return materials.filter(material =>
+      material.type === 'application/pdf' ||
+      material.type.includes('ms') ||
+      material.type.includes('officedocument') ||
+      material.type === 'text/plain'
+    );
   }
 }

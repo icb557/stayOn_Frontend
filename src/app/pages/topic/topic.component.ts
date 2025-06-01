@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TopicService } from '../../services/topic.service';
 import { Post } from '../../interfaces/post';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Material } from '../../interfaces/material';
 
 @Component({
   selector: 'app-topic',
@@ -58,5 +59,20 @@ export class TopicComponent {
 
   showProfile(id: number) {
     this.router.navigate([`/profile/${id}`])
+  }
+
+  filterImages(materials: Material[]) {
+    return materials.filter(material => material.type.startsWith('image/'));
+  }
+  filterVideos(materials: Material[]) {
+    return materials.filter(material => material.type.startsWith('video/'));
+  }
+  filterDocuments(materials: Material[]) {
+    return materials.filter(material =>
+      material.type === 'application/pdf' ||
+      material.type.includes('ms') ||
+      material.type.includes('officedocument') ||
+      material.type === 'text/plain'
+    );
   }
 }

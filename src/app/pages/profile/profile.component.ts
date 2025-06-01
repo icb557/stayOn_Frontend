@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { FollowerService } from '../../services/follower.service';
+import { Material } from '../../interfaces/material';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,11 @@ export class ProfileComponent {
   profile: Profile = {} as Profile
   userId: number = 0
   showUserForm = false
+  firstName = ''
+  lastName = ''
+  posts = 0
+  followers = 0
+  following = 0
 
 
   constructor(private aRouter: ActivatedRoute, private _profileService: Profileservice, private _userService: UserService, private _followService: FollowerService, private router: Router) {
@@ -106,6 +112,11 @@ export class ProfileComponent {
     this._profileService.getProfile(this.userId).subscribe({
       next: (data) => {
         this.profile = data
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.posts = data.Posts.length;
+        this.followers = data.Followers.length;
+        this.following = data.Following.length;
       }, error: (e: HttpErrorResponse) => {
         Swal.fire({
           icon: "error",
@@ -253,5 +264,19 @@ export class ProfileComponent {
     });
   }
 
+  filterImages(materials: Material[]) {
+    return materials.filter(material => material.type.startsWith('image/'));
+  }
+  filterVideos(materials: Material[]) {
+    return materials.filter(material => material.type.startsWith('video/'));
+  }
+  filterDocuments(materials: Material[]) {
+    return materials.filter(material =>
+      material.type === 'application/pdf' ||
+      material.type.includes('ms') ||
+      material.type.includes('officedocument') ||
+      material.type === 'text/plain'
+    );
+  }
 
 }

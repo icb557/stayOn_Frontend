@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommentService } from '../../services/comment.service';
 import { Comment } from '../../interfaces/comment';
+import { Material } from '../../interfaces/material';
 
 @Component({
   selector: 'app-post',
@@ -62,10 +63,10 @@ export class PostComponent implements OnInit {
     if (this.commentForm.valid) {
       const newComment: Omit<Comment, 'id' | 'date'> = {
         message: this.commentForm.value.message,
-        userId: Number(localStorage.getItem('id')), 
+        userId: Number(localStorage.getItem('id')),
         postId: this.id
-      } as Omit<Comment, 'id'>; 
-      
+      } as Omit<Comment, 'id'>;
+
       this._commentService.createComment(newComment).subscribe({
         next: (data) => {
           Swal.fire({
@@ -74,8 +75,8 @@ export class PostComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           });
-          this.commentForm.reset();  
-          this.post.Comments.unshift(data);  
+          this.commentForm.reset();
+          this.post.Comments.unshift(data);
         },
         error: (e: HttpErrorResponse) => {
           Swal.fire({
@@ -150,7 +151,7 @@ export class PostComponent implements OnInit {
   // New method to save the edited comment
   saveEditComment(commentId: number) {
     if (this.editedMessage.trim() !== '') {
-      const updatedComment: Partial<Comment> = { message: this.editedMessage};
+      const updatedComment: Partial<Comment> = { message: this.editedMessage };
       this._commentService.updateComment(commentId, updatedComment).subscribe({
         next: (updatedData: Comment) => {
           const index = this.post.Comments.findIndex(c => c.id === commentId);
@@ -171,5 +172,20 @@ export class PostComponent implements OnInit {
   cancelEdit() {
     this.editingCommentId = null;
     this.editedMessage = '';
+  }
+
+  filterImages(materials: Material[]) {
+    return materials.filter(material => material.type.startsWith('image/'));
+  }
+  filterVideos(materials: Material[]) {
+    return materials.filter(material => material.type.startsWith('video/'));
+  }
+  filterDocuments(materials: Material[]) {
+    return materials.filter(material =>
+      material.type === 'application/pdf' ||
+      material.type.includes('ms') ||
+      material.type.includes('officedocument') ||
+      material.type === 'text/plain'
+    );
   }
 }
