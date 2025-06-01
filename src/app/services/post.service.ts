@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Post, PostCreate, PostUpdate } from '../interfaces/post';
+import { Post, PostUpdate } from '../interfaces/post';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +32,8 @@ export class PostService {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}/${id}`)
   }
 
-  createPost(post: PostCreate): Observable<PostCreate> {
-    return this.http.post<PostCreate>(`${this.myAppUrl}${this.myApiUrl}`, post)
+  createPost(formData: any): Observable<any> {
+    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}`, formData)
   }
 
   updatePost(id: number, post: PostUpdate): Observable<PostUpdate> {

@@ -20,27 +20,45 @@
   <div class="post-creator-wrapper">
     <div class="post-creator">
       <div class="post-header">Crear publicación</div>
-      <div class="post-body">
-        <textarea
-          class="post-message"
-          placeholder="¿Qué estás pensando {{userName ? userName : ''}}?"
-        ></textarea>
+      <form
+        [formGroup]="publishForm"
+        (ngSubmit)="onSubmit()"
+        enctype="multipart/form-data"
+        class="publish-form"
+      >
+        <div class="post-body">
+          <textarea
+            formControlName="message"
+            class="post-message"
+            placeholder="¿Qué estás pensando {{ userName ? userName : '' }}?"
+          ></textarea>
 
-        <input
-          type="text"
-          class="post-topic"
-          placeholder="Tema (ej. Tecnología, Psicología...)"
-        />
+          <select formControlName="topicId" class="post-topic">
+            <option value="" disabled selected>Selecciona un tema</option>
+            @for (topic of topics; track topic.id) {
+            <option value="{{ topic.id }}">{{ topic.name }}</option>
+            }
+          </select>
 
-        <div class="attachment-area">
-          <label for="file-upload" class="attachment-label"
-            >📎 Adjuntar archivo</label
-          >
-          <input type="file" id="file-upload" class="file-input" multiple />
+          <div class="attachment-area">
+            <label for="file-upload" class="attachment-label"
+              >📎 Adjuntar archivo</label
+            >
+            <input
+              type="file"
+              id="file-upload"
+              class="file-input"
+              (change)="onFileChange($event)"
+              multiple
+              accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt"
+            />
+          </div>
+
+          <button class="comment-btn publish-btn" type="submit">
+            Publicar
+          </button>
         </div>
-
-        <button class="comment-btn publish-btn">Publicar</button>
-      </div>
+      </form>
     </div>
   </div>
 
