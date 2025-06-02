@@ -30,4 +30,8 @@ export class NavbarComponent implements OnInit {
   goToProfile(userId: number): void {
     this.router.navigate([`/profile/${userId}`]);
   }
+
+  goToAboutSupport() {
+    this.router.navigate(['/about-support']);
+  }
 }

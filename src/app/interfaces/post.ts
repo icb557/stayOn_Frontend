@@ -14,19 +14,6 @@ export interface Post {
     Topic: Topic
 }
 
-export interface PostCreate {
-    id: number,
-    message: string,
-    date: string,
-    topicId: number,
-    userId: number,
-    materials: {
-        name: string,
-        uri: string,
-        type: string,
-    }[]
-}
-
 export interface PostUpdate {
     message: string,
     date: string,
