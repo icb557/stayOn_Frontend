@@ -7,44 +7,63 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SearchComponent } from './pages/search/search.component';
+import { MeetingComponent } from './pages/meeting/meeting.component';
+import { MeetingsComponent } from './pages/meetings/meetings.component';
 
-export const routes: Routes = [{
+export const routes: Routes = [
+  {
     title: 'Home',
     path: '',
     component: HomeComponent,
-},
-{
+  },
+  {
     title: 'login',
     path: 'login',
     component: LoginComponent,
-
-}, {
+  },
+  {
     title: 'register',
     path: 'register',
-    component: RegisterComponent
-}, {
+    component: RegisterComponent,
+  },
+  {
     title: 'Forgot Password',
     path: 'forgot-password',
-    component: ForgotPasswordComponent
-}, {
+    component: ForgotPasswordComponent,
+  },
+  {
     title: 'Reset Password',
     path: 'reset-password',
-    component: ResetPasswordComponent
-}, {
+    component: ResetPasswordComponent,
+  },
+  {
     title: 'post',
     path: 'post/:id',
-    component: PostComponent
-}, {
+    component: PostComponent,
+  },
+  {
     title: 'profile',
     path: 'profile/:userId',
-    component: ProfileComponent
-}, {
+    component: ProfileComponent,
+  },
+  {
     title: 'search',
     path: 'search',
-    component: SearchComponent
-}, {
+    component: SearchComponent,
+  },
+  {
+    title: 'meeting',
+    path: 'meeting',
+    component: MeetingComponent,
+  },
+  {
+    title: 'meettings',
+    path: 'meetings',
+    component: MeetingsComponent,
+  },
+  {
     path: '**',
     redirectTo: '',
-    pathMatch: 'full'
-}
+    pathMatch: 'full',
+  },
 ];
