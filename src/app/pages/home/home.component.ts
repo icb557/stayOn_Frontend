@@ -17,6 +17,7 @@ import { Material } from '../../interfaces/material';
 })
 export class HomeComponent {
   posts: Post[] = []
+  postsByUserPreferences: Post[] = []
   currentSlideIndex = 0;
   slides!: NodeListOf<Element>;
   userName = localStorage.getItem('firstName')!;
@@ -34,6 +35,7 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
+    this.getPostByUserPreferences()
     this.getPost()
     this.slides = document.querySelectorAll('.carousel-slide');
     this.showSlide(this.currentSlideIndex);
@@ -63,6 +65,28 @@ export class HomeComponent {
 
   showPost(id: number) {
     this.router.navigate([`/post/${id}`])
+  }
+
+  getPostByUserPreferences() {
+    this._postService.getPostByUserPreferences(Number(this.userId)).subscribe({
+      next: (data) => {
+        this.postsByUserPreferences = data
+      }, error: (e: HttpErrorResponse) => {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error ocurred while retrieving post",
+          footer: "Please try again later",
+          showConfirmButton: false,
+          timer: 4000
+        });
+        if (e.status === 404) {
+          console.error('"No posts available."', e);
+        } else {
+          console.error('An error occurred while retrieving post', e);
+        }
+      }
+    })
   }
 
   getPost() {

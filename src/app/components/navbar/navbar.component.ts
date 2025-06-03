@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
   standalone: true,
+  imports: [RouterModule]
 })
 export class NavbarComponent implements OnInit {
   userName: string = '';
@@ -33,5 +34,9 @@ export class NavbarComponent implements OnInit {
 
   goToAboutSupport() {
     this.router.navigate(['/about-support']);
+  }
+
+  goToPreferences() {
+    this.router.navigate([`/preferences/${this.userId}`]);
   }
 }

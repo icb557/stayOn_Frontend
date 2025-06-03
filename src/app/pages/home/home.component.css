@@ -263,6 +263,13 @@
     gap: 16px;
 }
 
+.section-title {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    color: var(--light-blue)
+}
+
 .post-card {
     background-color: var(--white);
     border-radius: 8px;

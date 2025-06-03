@@ -11,6 +11,7 @@ import { MeetingComponent } from './pages/meeting/meeting.component';
 import { MeetingsComponent } from './pages/meetings/meetings.component';
 import { TopicComponent } from './pages/topic/topic.component';
 import { AboutSupportComponent } from './pages/about-support/about-support.component';
+import { PreferencesComponent } from './pages/preferences/preferences.component';
 
 export const routes: Routes = [
   {
@@ -72,6 +73,11 @@ export const routes: Routes = [
     title: 'about-support',
     path: 'about-support',
     component: AboutSupportComponent,
+  },
+  {
+    title: 'preferences',
+    path: 'preferences/:userId',
+    component: PreferencesComponent,
   },
   {
     path: '**',
