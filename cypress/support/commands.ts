@@ -35,7 +35,7 @@
 //     }
 //   }
 // }
-
+import 'cypress-file-upload';
 Cypress.Commands.add('login', (email: string, password: string) => {
   cy.session([email, password], () => {
     // 1. Visit login page
@@ -53,4 +53,3 @@ Cypress.Commands.add('login', (email: string, password: string) => {
   })
 })
 
-  
